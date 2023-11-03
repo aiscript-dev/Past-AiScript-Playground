@@ -73,8 +73,9 @@ watch(script, () => {
 		ast.value = Parser.parse(script.value);
 		syntaxErrorMessage.value = null;
 	} catch (e) {
-		syntaxErrorMessage.value = e.message;
-		console.error(e.info);
+		const err = e as Error;
+		syntaxErrorMessage.value = err.message;
+		console.error(('info' in err) ? err.info : err);
 		return;
 	}
 }, {

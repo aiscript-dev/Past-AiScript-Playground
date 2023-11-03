@@ -3,12 +3,10 @@
   "compilerOptions": {
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
+		"strict": true,
 		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
 		"noImplicitReturns": true,
-		"noImplicitThis": true,
 		"noUncheckedIndexedAccess": true,
-		"strictNullChecks": true,
 		"target": "es2022",
     "importHelpers": true,
     "isolatedModules": true,

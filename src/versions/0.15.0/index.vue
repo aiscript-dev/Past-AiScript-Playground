@@ -1,40 +1,33 @@
 <template>
 <div id="root">
 	<div id="grid1">
-		<div id="editor" class="container">
-			<header>Input<div class="actions"><button @click="setCode">FizzBuzz</button></div></header>
-			<div>
-				<PrismEditor class="code" v-model="script" :highlight="highlighter" :line-numbers="false"/>
-			</div>
-			<footer>
+		<Container id='editor'>
+			<template #header>
+				Input<div class="actions"><button @click="setCode">FizzBuzz</button></div>
+			</template>
+			<PrismEditor class="code" v-model="script" :highlight="highlighter" :line-numbers="false"/>
+			<template #footer>
 				<span v-if="syntaxErrorMessage" class="syntaxError">{{ syntaxErrorMessage }}</span>
 				<div class="actions"><button @click="run">RUN</button></div>
-			</footer>
-		</div>
-		<div id="logs" class="container">
-			<header>Output</header>
-			<div>
-				<div v-for="log in logs" class="log" :key="log.id" :class="[{ print: log.print }, log.type]"><span class="type">{{ log.type }}</span> {{ log.text }}</div>
-			</div>
-		</div>
+			</template>
+		</Container>
+		<Container id='logs'>
+			<template #header>Output</template>
+			<div v-for="log in logs" class="log" :key="log.id" :class="[{ print: log.print }, log.type]"><span class="type">{{ log.type }}</span> {{ log.text }}</div>
+		</Container>
 	</div>
 	<div id="grid2">
-		<div id="ast" class="container">
-			<header>AST</header>
-			<div>
-				<pre>{{ JSON.stringify(ast, null, '\t') }}</pre>
-			</div>
-		</div>
-		<div id="bin" class="container">
-			<header>Bytecode</header>
-			<div>
-			</div>
-		</div>
-		<div id="debugger" class="container">
-			<header>Debugger</header>
-			<div>
-			</div>
-		</div>
+		<Container id='ast'>
+			<template #header>AST</template>
+			<pre>{{ JSON.stringify(ast, null, '\t') }}</pre>
+		</Container>
+		<Container id='bin'>
+			<template #header>Bytecode</template>
+			<header></header>
+		</Container>
+		<Container id='debugger'>
+			<template #header>Debugger</template>
+		</Container>
 	</div>
 </div>
 </template>
@@ -54,6 +47,7 @@ import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism-okaidia.css';
+import Container from '@common/Container.vue';
 
 // 使う場所はそんなにないしとりあえずunknownで
 type Grammer = unknown;
@@ -79,8 +73,9 @@ watch(script, () => {
 		ast.value = Parser.parse(script.value);
 		syntaxErrorMessage.value = null;
 	} catch (e) {
-		syntaxErrorMessage.value = e.message;
-		console.error(e.info);
+		const err = e as Error;
+		syntaxErrorMessage.value = err.message;
+		console.error(('info' in err) ? err.info : err);
 		return;
 	}
 }, {
@@ -132,7 +127,7 @@ const run = async () => {
 		await interpreter.exec(ast.value!);
 	} catch (e) {
 		console.error(e);
-		window.alert(e.toString());
+		window.alert(`{e}`);
 	}
 }
 
