@@ -8,7 +8,7 @@ export default defineConfig({
 	resolve: {
     alias: {
       '@/': `${__dirname}/src/`,
-      '@common/': `${__dirname}/src/versions/common/`,
+      '@common/': `${__dirname}/src/common/`,
     }
   },
 })

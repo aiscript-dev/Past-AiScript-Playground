@@ -15,7 +15,7 @@
 		"baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
-      "@common/*": ["./versions/common/*"]
+      "@common/*": ["./common/*"]
     }
   },
 	"compileOnSave": false,
