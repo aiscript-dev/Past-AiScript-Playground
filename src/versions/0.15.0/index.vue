@@ -26,7 +26,7 @@
 <script setup lang='ts'>
 import { ref, watch } from 'vue';
 import { Interpreter, Parser, values, utils, Ast } from 'aiscript0_15_0';
-
+import Editor from '@common/Editor.vue';
 import Container from '@common/Container.vue';
 
 
