@@ -3,7 +3,7 @@
 	<template #header>
 		Input
 		<div :class="$style.actions" v-if='props.samples'>
-			<MenuButton :options='Object.keys(props.samples!)' @select='onSelectSample'/>
+			<MenuButton :options='Object.keys(props.samples!)' @select='onSelectSample'>Samples</MenuButton>
 		</div>
 	</template>
 	<PrismEditor :class="$style.code" v-model="modelValueInter" :highlight="highlighter" :line-numbers="false"/>

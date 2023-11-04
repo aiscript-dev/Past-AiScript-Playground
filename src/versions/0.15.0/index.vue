@@ -29,8 +29,8 @@ import { Interpreter, Parser, values, utils, Ast } from 'aiscript0_15_0';
 import Editor from '@common/Editor.vue';
 import Container from '@common/Container.vue';
 
-
-const script = ref(window.localStorage.getItem('script') ?? '<: "Hello, AiScript!"');
+const storageKey = '0.15.0';
+const script = ref(window.localStorage.getItem(storageKey) ?? '<: "Hello, AiScript!"');
 
 const ast = ref<Ast.Node[]|null>(null);
 const logs = ref<{
@@ -42,7 +42,7 @@ const logs = ref<{
 const syntaxErrorMessage = ref<string|null>(null);
 
 watch(script, () => {
-	window.localStorage.setItem('script', script.value);
+	window.localStorage.setItem(storageKey, script.value);
 	try {
 		ast.value = Parser.parse(script.value);
 		syntaxErrorMessage.value = null;

@@ -1,6 +1,6 @@
 <template>
-<div>
-	<button @click="showMenu=!showMenu">Samples</button>
+<div :class="$style.wrapper">
+	<button @click="showMenu=!showMenu"><slot /></button>
 	<Transition>
 		<div v-if='showMenu' :class="$style.menu">
 			<div v-if='options instanceof Array'>
@@ -19,7 +19,7 @@ import { ref } from 'vue';
 const showMenu = ref<boolean>(false);
 
 const props = defineProps<{
-	options: string[]|Record<string, string>;
+	options: (readonly string[])|Record<string, string>;
 }>();
 const emit = defineEmits<{
 	(e: 'select', value: string): void;
@@ -27,6 +27,9 @@ const emit = defineEmits<{
 </script>
 
 <style module>
+.wrapper {
+	display: inline-block;
+}
 .menu {
 	position: absolute;
 	border: solid var(--borderThickness) #555;
@@ -35,7 +38,9 @@ const emit = defineEmits<{
 	z-index: 10;
 }
 .opt {
-	padding: 16px;
-	border: dashed var(--borderThickness) #555;
+	padding: 8px 16px;
+}
+.opt:not(:first-child) {
+	border-top: dashed var(--borderThickness) #555;
 }
 </style>

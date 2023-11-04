@@ -1,8 +1,6 @@
 <template>
 <h1>AiScript (
-<select id='version' @change='onVersionSelect'>
-	<option v-for='v in versions'>{{ v }}</option>
-</select>
+	<MenuButton id='version' :options='versions' @select='onVersionSelect'>{{ version }}</MenuButton>
 ) Playground</h1>
 <V0_16_0 v-if='version === "0.16.0"'></V0_16_0>
 <V0_15_0 v-if='version === "0.15.0"'></V0_15_0>
@@ -10,17 +8,15 @@
 
 <script setup lang='ts'>
 import { ref } from 'vue';
+import MenuButton from '@common/MenuButton.vue';
 import V0_16_0 from './versions/0.16.0/index.vue';
 import V0_15_0 from './versions/0.15.0/index.vue';
-const version = ref('0.16.0');
+const version = ref(window.localStorage.getItem('version') ?? '0.16.0');
 const versions = ['0.16.0', '0.15.0'] as const;
 
-function onVersionSelect(e: Event) {
-	if (e.target instanceof HTMLSelectElement){
-		version.value = e.target.value;
-	} else {
-		throw new Error('onVersionSelect got non-select element.');
-	}
+function onVersionSelect(v: string) {
+	version.value = v;
+	window.localStorage.setItem('version', version.value);
 }
 
 </script>
