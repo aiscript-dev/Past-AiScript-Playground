@@ -34,7 +34,6 @@ export default {
 	background: #202020;
 }
 .header {
-	display: flex;
 	padding: 8px 16px;
 	border-bottom: dashed var(--borderThickness) #555;
 	font-weight: bold;
@@ -45,7 +44,6 @@ export default {
 	padding: 16px;
 }
 .footer {
-	display: flex;
 	padding: 8px 16px;
 	border-top: dashed var(--borderThickness) #555;
 }

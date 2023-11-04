@@ -1,16 +1,7 @@
 <template>
 <div id="root">
 	<div id="grid1">
-		<Container id='editor'>
-			<template #header>
-				Input<div class="actions"><button @click="setCode">FizzBuzz</button></div>
-			</template>
-			<PrismEditor class="code" v-model="script" :highlight="highlighter" :line-numbers="false"/>
-			<template #footer>
-				<span v-if="syntaxErrorMessage" class="syntaxError">{{ syntaxErrorMessage }}</span>
-				<div class="actions"><button @click="run">RUN</button></div>
-			</template>
-		</Container>
+		<Editor v-model='script' :samples='samples' :parseError='syntaxErrorMessage' @run='run'/>
 		<Container id='logs'>
 			<template #header>Output</template>
 			<div v-for="log in logs" class="log" :key="log.id" :class="[{ print: log.print }, log.type]"><span class="type">{{ log.type }}</span> {{ log.text }}</div>
@@ -36,27 +27,10 @@
 import { ref, watch } from 'vue';
 import { Interpreter, Parser, values, utils, Ast } from 'aiscript0_15_0';
 
-import { PrismEditor } from 'vue-prism-editor';
-import 'vue-prism-editor/dist/prismeditor.min.css';
-import 'prismjs';
-/**
- * @types/prismjsの更新が止まっているためとりあえずts-ignoreする（declare moduleしようとしたがうまくいかなかった）
- */
-// @ts-ignore
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism-okaidia.css';
 import Container from '@common/Container.vue';
 
-// 使う場所はそんなにないしとりあえずunknownで
-type Grammer = unknown;
-declare var languages: {
-	js: Grammer;
-};
-declare function highlight(test: string, grammer: Grammer, language: string): string;
 
-const script = ref(window.localStorage.getItem('script') || '<: "Hello, AiScript!"');
+const script = ref(window.localStorage.getItem('script') ?? '<: "Hello, AiScript!"');
 
 const ast = ref<Ast.Node[]|null>(null);
 const logs = ref<{
@@ -82,13 +56,14 @@ watch(script, () => {
 	immediate: true
 });
 
-const setCode = () => {
-	script.value = `for (let i, 100) {
+const samples = {
+	['Hello AiScript']: '<: "Hello, AiScript!"',
+	FizzBazz: `for (let i, 100) {
   <: if (i % 15 == 0) "FizzBuzz"
     elif (i % 3 == 0) "Fizz"
     elif (i % 5 == 0) "Buzz"
     else i
-}`;
+}`,
 };
 
 let interpreter: Interpreter|null = null;
@@ -130,10 +105,6 @@ const run = async () => {
 		window.alert(`{e}`);
 	}
 }
-
-const highlighter = (code: string) => {
-	return highlight(code, languages.js, 'javascript');
-};
 </script>
 
 <style scoped>
@@ -174,16 +145,6 @@ pre {
 	min-height: 0;
 }
 
-#editor {
-}
-#editor > .code {
-	box-sizing: border-box;
-	padding: 16px;
-}
-#editor .syntaxError {
-	color: #f00;
-}
-
 #logs .log .type {
 	opacity: 0.5;
 	color: #fff;
@@ -202,33 +163,7 @@ pre {
 
 }
 
-.container {
-	display: flex;
-	flex-direction: column;
-	border: solid var(--borderThickness) #555;
-	border-radius: 8px;
-	background: #202020;
-}
-.container > header {
-	display: flex;
-	padding: 8px 16px;
-	border-bottom: dashed var(--borderThickness) #555;
-	font-weight: bold;
-}
-.container > header > .actions {
-	margin-left: auto;
-}
-.container > div {
-	flex: 1;
-	overflow: auto;
-	padding: 16px;
-}
-.container > footer {
-	display: flex;
-	padding: 8px 16px;
-	border-top: dashed var(--borderThickness) #555;
-}
-.container > footer > .actions {
+.actions {
 	margin-left: auto;
 }
 </style>
