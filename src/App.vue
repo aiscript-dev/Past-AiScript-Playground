@@ -1,7 +1,9 @@
 <template>
 <h1>AiScript (
-	<MenuButton id='version' :options='versions' @select='onVersionSelect'>{{ version }}</MenuButton>
+	<MenuButton id='version' :options='menu' @select='onVersionSelect'>{{ version }}</MenuButton>
 ) Playground</h1>
+<Next v-if='version === "next"'></Next>
+<Develop v-if='version === "develop"'></Develop>
 <V0_16_0 v-if='version === "0.16.0"'></V0_16_0>
 <V0_15_0 v-if='version === "0.15.0"'></V0_15_0>
 <V0_14_1 v-if='version === "0.14.1"'></V0_14_1>
@@ -10,12 +12,22 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
 import MenuButton from '@common/MenuButton.vue';
+import Next from './versions/next/index.vue';
+import Develop from './versions/develop/index.vue';
 import V0_16_0 from './versions/0.16.0/index.vue';
 import V0_15_0 from './versions/0.15.0/index.vue';
 import V0_14_1 from './versions/0.14.1/index.vue';
-const version = ref(window.localStorage.getItem('version') ?? '0.16.0');
-const versions = ['0.16.0', '0.15.0', '0.14.1'] as const;
+const versions = [
+	'next',
+	'develop',
+	'0.16.0',
+	'0.15.0',
+	'0.14.1'
+] as const;
+const latest = '0.16.0';
 
+const version = ref(window.localStorage.getItem('version') ?? latest);
+const menu = Object.fromEntries(versions.map(v => [v, v + (v == latest ? '(latest)' : '')]));
 function onVersionSelect(v: string) {
 	version.value = v;
 	window.localStorage.setItem('version', version.value);
