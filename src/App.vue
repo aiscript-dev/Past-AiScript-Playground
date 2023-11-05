@@ -4,6 +4,7 @@
 ) Playground</h1>
 <V0_16_0 v-if='version === "0.16.0"'></V0_16_0>
 <V0_15_0 v-if='version === "0.15.0"'></V0_15_0>
+<V0_14_1 v-if='version === "0.14.1"'></V0_14_1>
 </template>
 
 <script setup lang='ts'>
@@ -11,8 +12,9 @@ import { ref } from 'vue';
 import MenuButton from '@common/MenuButton.vue';
 import V0_16_0 from './versions/0.16.0/index.vue';
 import V0_15_0 from './versions/0.15.0/index.vue';
+import V0_14_1 from './versions/0.14.1/index.vue';
 const version = ref(window.localStorage.getItem('version') ?? '0.16.0');
-const versions = ['0.16.0', '0.15.0'] as const;
+const versions = ['0.16.0', '0.15.0', '0.14.1'] as const;
 
 function onVersionSelect(v: string) {
 	version.value = v;

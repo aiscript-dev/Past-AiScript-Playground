@@ -10,8 +10,9 @@
   "dependencies": {
     "aiscript0_16_0": "npm:@syuilo/aiscript@0.16.0",
     "aiscript0_15_0": "npm:@syuilo/aiscript@0.15.0",
+    "aiscript0_14_1": "npm:@syuilo/aiscript@0.14.1",
     "prismjs": "^1.29.0",
-    "vue": "^3.0.5",
+    "vue": "^3.3.7",
     "vue-prism-editor": "^2.0.0-alpha.2"
   },
   "devDependencies": {
