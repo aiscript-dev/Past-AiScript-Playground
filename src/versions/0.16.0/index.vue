@@ -22,7 +22,7 @@
     <div id="grid2">
       <Container id="ast">
         <template #header>AST</template>
-        <pre>{{ ast }}</pre>
+        <pre>{{ JSON.stringify(ast, null, "\t") }}</pre>
       </Container>
       <Container id="bin">
         <template #header>Bytecode</template>
@@ -35,43 +35,26 @@
   </div>
 </template>
 
-<script lang="ts">
-export const versions = ["next", "develop", "0.16.0", "0.15.0", "0.14.1"] as const;
-export const latest = "0.16.0" as const;
-export type Log = {
-	id: number;
-	type?: string;
-	text?: string;
-	print?: boolean;
-}
-</script>
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { Interpreter, Parser, values, utils, Ast } from "./version.ts";
+import { version, samples } from "./version.ts";
 import Editor from "@common/Editor.vue";
 import Container from "@common/Container.vue";
-import * as Next from "@/versions/next/index.ts";
-import * as Develop from "@/versions/develop/index.ts";
-import * as V0_16_0 from "@/versions/0.16.0/index.ts";
-import * as V0_15_0 from "@/versions/0.15.0/index.ts";
-import * as V0_14_1 from "@/versions/0.14.1/index.ts";
-
-const props = defineProps<{
-	ver: typeof versions[number];
-}>();
-const { parse, exec, version, samples } = {
-	'next': Next,
-	'develop': Develop,
-	'0.16.0': V0_16_0,
-	'0.15.0': V0_15_0,
-	'0.14.1': V0_14_1,
-}[props.ver];
 
 const script = ref(
   window.localStorage.getItem(version) ?? '<: "Hello, AiScript!"',
 );
 
-const logs = ref<Log[]>([]);
-const ast = ref<string>('');
+const ast = ref<Ast.Node[] | null>(null);
+const logs = ref<
+  {
+    id: number;
+    type?: string;
+    text?: string;
+    print?: boolean;
+  }[]
+>([]);
 const syntaxErrorMessage = ref<string | null>(null);
 
 watch(
@@ -79,7 +62,7 @@ watch(
   () => {
     window.localStorage.setItem(version, script.value);
     try {
-      ast.value = parse(script.value);
+      ast.value = Parser.parse(script.value);
       syntaxErrorMessage.value = null;
     } catch (e) {
       const err = e as Error;
@@ -87,24 +70,60 @@ watch(
       console.error("info" in err ? err.info : err);
       return;
     }
-  }, { immediate: true, }
+  },
+  {
+    immediate: true,
+  },
 );
 
-function run() {
+let interpreter: Interpreter | null = null;
+const run = async () => {
   logs.value = [];
-	exec({
-		in: (q: string) => new Promise((ok) => {
-			const res = window.prompt(q);
-			ok(res ?? "");
-		}),
-		out: (l: Log) => logs.value.push(l),
-		end: (l: Log) => logs.value.push(l),
-		err: (e: any) => {
-			console.error(e);
-			window.alert(`{e}`);
-		}
-	});
-}
+
+  interpreter?.abort();
+  interpreter = new Interpreter(
+    {},
+    {
+      in: (q: string) => {
+        return new Promise((ok) => {
+          const res = window.prompt(q);
+          ok(res ?? "");
+        });
+      },
+      out: (value: values.Value) => {
+        logs.value.push({
+          id: Math.random(),
+          type: value.type,
+          text: utils.valToString(value, true),
+          print: true,
+        });
+      },
+      err: (e: Error) => {
+        window.alert(e.toString());
+      },
+      log: (type: string, params: Record<string, any>) => {
+        switch (type) {
+          case "end":
+            logs.value.push({
+              id: Math.random(),
+              text: utils.valToString(params.val, true),
+              print: false,
+            });
+            break;
+          default:
+            break;
+        }
+      },
+    },
+  );
+
+  try {
+    await interpreter.exec(ast.value!);
+  } catch (e) {
+    console.error(e);
+    window.alert("Internal Error: " + e);
+  }
+};
 </script>
 
 <style scoped>
@@ -118,16 +137,30 @@ pre {
   height: 100vh;
 }
 
-.grid {
+#grid1 {
   box-sizing: border-box;
   flex: 1;
   display: grid;
-  grid-template-columns:
-		repeat(auto-fit, min-max(100px, 1fr));
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   grid-gap: 16px;
+  padding: 16px 16px 16px 16px;
   min-height: 0;
 }
-.grid > * {
+#grid1 > * {
+  min-height: 0;
+}
+#grid2 {
+  box-sizing: border-box;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 16px;
+  padding: 0 16px 16px 16px;
+  min-height: 0;
+}
+#grid2 > * {
   min-height: 0;
 }
 
