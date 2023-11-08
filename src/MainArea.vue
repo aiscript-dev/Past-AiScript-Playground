@@ -116,19 +116,24 @@ pre {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  gap: 16px;
 }
 
-.grid {
+#grid1, #grid2 {
   box-sizing: border-box;
   flex: 1;
   display: grid;
-  grid-template-columns:
-		repeat(auto-fit, min-max(100px, 1fr));
-  grid-gap: 16px;
+  gap: 16px;
   min-height: 0;
 }
-.grid > * {
+#grid1 > *, #grid2 > * {
   min-height: 0;
+}
+#grid1 {
+  grid-template-columns: 1fr 1fr;
+}
+#grid2 {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 #logs .log .type {

@@ -41,6 +41,7 @@ function onVersionSelect(v: string) {
     Menlo,
     Courier,
     monospace;
+	box-sizing: border-box;
 }
 
 html {
@@ -61,6 +62,6 @@ body {
 }
 h1 {
   font-size: 1.5em;
-  margin: 0 16px;
+  margin: 0 0 16px 0;
 }
 </style>
