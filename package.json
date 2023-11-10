@@ -23,9 +23,9 @@
     "vue-prism-editor": "^2.0.0-alpha.2"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.0",
+    "@babel/types": "^7.23.3",
     "@types/node": "^20.8.10",
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^4.4.1",
     "@vue/compiler-sfc": "^3.0.5",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
