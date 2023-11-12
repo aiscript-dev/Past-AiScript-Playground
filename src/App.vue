@@ -1,21 +1,21 @@
 <template>
-	<div id='wrapper'>
-  <h1>
-    AiScript (
-    <MenuButton id="version" :options="menu" @select="onVersionSelect">{{
-      version
-    }}</MenuButton>
-    ) Playground
-  </h1>
-	<div v-for='v in versions'>
-		<MainArea :ver='v' v-if='v==version'/>
-	</div>
-	</div>
+  <div id="wrapper">
+    <h1>
+      AiScript (
+      <MenuButton id="version" :options="menu" @select="onVersionSelect">{{
+        version
+      }}</MenuButton>
+      ) Playground
+    </h1>
+    <div v-for="v in versions">
+      <MainArea :ver="v" v-if="v == version" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import MainArea, { versions, latest } from './MainArea.vue';
+import MainArea, { versions, latest } from "./MainArea.vue";
 import MenuButton from "@common/MenuButton.vue";
 
 const version = ref(window.localStorage.getItem("version") ?? latest);
@@ -41,7 +41,7 @@ function onVersionSelect(v: string) {
     Menlo,
     Courier,
     monospace;
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -58,7 +58,7 @@ body {
 
 <style scoped>
 #wrapper {
-	padding: 16px;
+  padding: 16px;
 }
 h1 {
   font-size: 1.5em;

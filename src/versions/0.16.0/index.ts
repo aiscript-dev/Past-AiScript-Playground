@@ -1,6 +1,6 @@
 import { Interpreter, Parser, values, utils, Ast } from "./version.ts";
 import { version, samples } from "./version.ts";
-import type { Log } from '@/MainArea.vue';
+import type { Log } from "@/MainArea.vue";
 
 export { version, samples };
 
@@ -8,21 +8,21 @@ let ast: Ast.Node[] = [];
 let interpreter: Interpreter | null = null;
 
 export function parse(code: string): string {
-	ast = Parser.parse(code);
-	return JSON.stringify(ast, null, "\t");
+  ast = Parser.parse(code);
+  return JSON.stringify(ast, null, "\t");
 }
 
 export async function exec(io: {
-	in: (q: string) => Promise<string>;
-	out: (l: Log) => void;
-	end: (l: Log) => void;
-	err: (e: any) => void;
+  in: (q: string) => Promise<string>;
+  out: (l: Log) => void;
+  end: (l: Log) => void;
+  err: (e: any) => void;
 }): Promise<void> {
   interpreter?.abort();
   interpreter = new Interpreter(
     {},
     {
-			in: io.in,
+      in: io.in,
       out: (value: values.Value) => {
         io.out({
           id: Math.random(),
@@ -51,6 +51,6 @@ export async function exec(io: {
   try {
     await interpreter.exec(ast);
   } catch (e) {
-		io.err(e);
+    io.err(e);
   }
-};
+}

@@ -7,6 +7,7 @@
     "build": "vue-tsc && vite build",
     "serve": "vite preview",
     "preinstall": "npm run build-develop && npm run build-next",
+    "prettier": "npx prettier . --write",
     "submodules": "git submodule update --init --depth=1",
     "build-develop": "cd develop && npm ci && npm run build",
     "build-next": "cd next && npm ci && npm run build",
