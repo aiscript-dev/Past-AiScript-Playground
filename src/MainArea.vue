@@ -109,7 +109,7 @@ function run() {
     end: (l: Log) => logs.value.push(l),
     err: (e: any) => {
       console.error(e);
-      window.alert(`{e}`);
+      window.alert(`${e}`);
     },
   });
 }
