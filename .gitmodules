@@ -1,7 +1,0 @@
-[submodule "develop"]
-	path = develop
-	url = https://github.com/aiscript-dev/aiscript
-[submodule "next"]
-	path = next
-	url = https://github.com/aiscript-dev/aiscript
-	branch = aiscript-next

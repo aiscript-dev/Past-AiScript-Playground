@@ -6,16 +6,11 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "serve": "vite preview",
-    "preinstall": "npm run build-develop && npm run build-next",
-    "prettier": "npx prettier . --write",
-    "submodules": "git submodule update --init --depth=1",
-    "build-develop": "cd develop && npm ci && npm run build",
-    "build-next": "cd next && npm ci && npm run build",
-    "update-aiscript": "git submodule update --remote"
+    "prettier": "npx prettier . --write"
   },
   "dependencies": {
-    "aiscript_develop": "file:./develop",
-    "aiscript_next": "file:./next",
+    "aiscript_develop": "FineArchs-org/aiscript#built-develop",
+    "aiscript_next": "FineArchs-org/aiscript#built-next",
     "aiscript0_14_1": "npm:@syuilo/aiscript@0.14.1",
     "aiscript0_15_0": "npm:@syuilo/aiscript@0.15.0",
     "aiscript0_16_0": "npm:@syuilo/aiscript@0.16.0",
