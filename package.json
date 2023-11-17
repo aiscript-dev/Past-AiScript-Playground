@@ -9,8 +9,8 @@
     "prettier": "npx prettier . --write"
   },
   "dependencies": {
-    "aiscript_develop": "FineArchs-org/aiscript#built-develop",
-    "aiscript_next": "FineArchs-org/aiscript#built-next",
+    "aiscript_develop": "FineArchs-org/aiscript#built-master",
+    "aiscript_next": "FineArchs-org/aiscript#built-aiscript-next",
     "aiscript0_14_1": "npm:@syuilo/aiscript@0.14.1",
     "aiscript0_15_0": "npm:@syuilo/aiscript@0.15.0",
     "aiscript0_16_0": "npm:@syuilo/aiscript@0.16.0",
