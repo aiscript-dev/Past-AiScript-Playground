@@ -39,11 +39,12 @@
 export const versions = [
   "next",
   "develop",
+  "0.17.0",
   "0.16.0",
   "0.15.0",
   "0.14.1",
 ] as const;
-export const latest = "0.16.0" as const;
+export const latest = "0.17.0" as const;
 export type Log = {
   id: number;
   type?: string;
@@ -57,6 +58,7 @@ import Editor from "@common/Editor.vue";
 import Container from "@common/Container.vue";
 import * as Next from "@/versions/next/index.ts";
 import * as Develop from "@/versions/develop/index.ts";
+import * as V0_17_0 from "@/versions/0.17.0/index.ts";
 import * as V0_16_0 from "@/versions/0.16.0/index.ts";
 import * as V0_15_0 from "@/versions/0.15.0/index.ts";
 import * as V0_14_1 from "@/versions/0.14.1/index.ts";
@@ -67,6 +69,7 @@ const props = defineProps<{
 const { parse, exec, version, samples } = {
   next: Next,
   develop: Develop,
+  "0.17.0": V0_17_0,
   "0.16.0": V0_16_0,
   "0.15.0": V0_15_0,
   "0.14.1": V0_14_1,
