@@ -15,7 +15,7 @@
     "aiscript0_15_0": "npm:@syuilo/aiscript@0.15.0",
     "aiscript0_16_0": "npm:@syuilo/aiscript@0.16.0",
     "prismjs": "^1.29.0",
-    "vue": "^3.4.4",
+    "vue": "^3.4.5",
     "vue-prism-editor": "^2.0.0-alpha.2"
   },
   "devDependencies": {
