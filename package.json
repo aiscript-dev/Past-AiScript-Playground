@@ -17,17 +17,17 @@
     "aiscript0_17_0": "npm:@syuilo/aiscript@0.17.0",
     "aiscript0_18_0": "npm:@syuilo/aiscript@0.18.0",
     "prismjs": "^1.29.0",
-    "vue": "^3.4.4",
+    "vue": "^3.4.29",
     "vue-prism-editor": "^2.0.0-alpha.2"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.6",
-    "@types/node": "^20.10.6",
-    "@vitejs/plugin-vue": "^5.0.2",
+    "@babel/types": "^7.24.7",
+    "@types/node": "^20.14.4",
+    "@vitejs/plugin-vue": "^5.0.5",
     "@vue/compiler-sfc": "^3.0.5",
-    "prettier": "^3.1.1",
+    "prettier": "^3.3.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
-    "vue-tsc": "^1.8.27"
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.21"
   }
 }
