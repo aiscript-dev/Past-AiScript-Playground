@@ -37,15 +37,16 @@
 
 <script lang="ts">
 export const versions = [
-  "next",
+  // "next",
   "develop",
+  "0.19.0",
   "0.18.0",
   "0.17.0",
   "0.16.0",
   "0.15.0",
   "0.14.1",
 ] as const;
-export const latest = "0.18.0" as const;
+export const latest = "0.19.0" as const;
 export type Log = {
   id: number;
   type?: string;
@@ -57,8 +58,9 @@ export type Log = {
 import { ref, watch } from "vue";
 import Editor from "@common/Editor.vue";
 import Container from "@common/Container.vue";
-import * as Next from "@/versions/next/index.ts";
+// import * as Next from "@/versions/next/index.ts";
 import * as Develop from "@/versions/develop/index.ts";
+import * as V0_19_0 from "@/versions/0.19.0/index.ts";
 import * as V0_18_0 from "@/versions/0.18.0/index.ts";
 import * as V0_17_0 from "@/versions/0.17.0/index.ts";
 import * as V0_16_0 from "@/versions/0.16.0/index.ts";
@@ -69,8 +71,9 @@ const props = defineProps<{
   ver: (typeof versions)[number];
 }>();
 const { parse, exec, version, samples } = {
-  next: Next,
+  // next: Next,
   develop: Develop,
+  "0.19.0": V0_19_0,
   "0.18.0": V0_18_0,
   "0.17.0": V0_17_0,
   "0.16.0": V0_16_0,
