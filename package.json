@@ -19,7 +19,8 @@
     "aiscript0_19_0": "npm:@syuilo/aiscript@0.19.0",
     "prismjs": "^1.29.0",
     "vue": "^3.4.31",
-    "vue-prism-editor": "^2.0.0-alpha.2"
+    "vue-prism-editor": "^2.0.0-alpha.2",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@babel/types": "^7.24.7",

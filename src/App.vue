@@ -3,28 +3,26 @@
     <h1>
       AiScript (
       <MenuButton id="version" :options="menu" @select="onVersionSelect">{{
-        version
+        router.currentRoute.value.params.ver
       }}</MenuButton>
       ) Playground
     </h1>
-    <div v-for="v in versions">
-      <MainArea :ver="v" v-if="v == version" />
-    </div>
+    <RouterView />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import MainArea, { versions, latest } from "./MainArea.vue";
+import { router } from "./router.ts";
+import { versions, latest } from "./MainArea.vue";
 import MenuButton from "@common/MenuButton.vue";
 
-const version = ref(window.localStorage.getItem("version") ?? latest);
 const menu = Object.fromEntries(
   versions.map((v) => [v, v + (v == latest ? "(latest)" : "")]),
 );
 function onVersionSelect(v: string) {
-  version.value = v;
-  window.localStorage.setItem("version", version.value);
+  window.localStorage.setItem("version", v);
+  router.replace(v);
 }
 </script>
 
