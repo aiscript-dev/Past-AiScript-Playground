@@ -13,16 +13,17 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { router } from "./router.ts";
+import { useRouter, useRoute } from 'vue-router'
 import { versions, latest } from "./MainArea.vue";
 import MenuButton from "@common/MenuButton.vue";
 
+const router = useRouter();
 const menu = Object.fromEntries(
   versions.map((v) => [v, v + (v == latest ? "(latest)" : "")]),
 );
 function onVersionSelect(v: string) {
   window.localStorage.setItem("version", v);
-  router.replace(v);
+  router.push({ path: v });
 }
 </script>
 
