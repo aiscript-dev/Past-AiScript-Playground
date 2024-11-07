@@ -26,7 +26,7 @@ jobs:
           if [[ $(git diff --cached) ]]
           then
             git commit -m"Dependencies Auto Update"
-            git push -u origin autoupdate
+            git push -f -u origin autoupdate
           fi
           PRS=$(gh pr list --json id -H autoupdate -s open)
           if [ "$PRS" == '[]' ]
