@@ -3,7 +3,7 @@
     <div id="grid1">
       <Editor
         v-model="script"
-        :samples="samples"
+        :samples="v.samples"
         :parseError="syntaxErrorMessage"
         @run="run"
       />
@@ -55,7 +55,8 @@ export type Log = {
 };
 </script>
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
+import { useStorage } from '@vueuse/core';
 import Editor from "@common/Editor.vue";
 import Container from "@common/Container.vue";
 // import * as Next from "@/versions/next/index.ts";
@@ -70,7 +71,8 @@ import * as V0_14_1 from "@/versions/0.14.1/index.ts";
 const props = defineProps<{
   ver: (typeof versions)[number];
 }>();
-const { parse, exec, version, samples } = {
+
+const vmodules = {
   // next: Next,
   develop: Develop,
   "0.19.0": V0_19_0,
@@ -79,36 +81,34 @@ const { parse, exec, version, samples } = {
   "0.16.0": V0_16_0,
   "0.15.0": V0_15_0,
   "0.14.1": V0_14_1,
-}[props.ver];
+} as const;
+const v = computed(() => vmodules[props.ver]);
 
-const script = ref(
-  window.localStorage.getItem(version) ?? '<: "Hello, AiScript!"',
-);
-
+const vscripts = Object.fromEntries(versions.map(
+  (_v) => [_v, useStorage<string>(_v, '<: "Hello, AiScript!"')]
+));
+const script = computed({
+  get(): string { return vscripts[props.ver]!.value },
+  set(newVal: string): void { vscripts[props.ver]!.value = newVal },
+});
 const logs = ref<Log[]>([]);
-const ast = ref<string>("");
 const syntaxErrorMessage = ref<string | null>(null);
-
-watch(
-  script,
-  () => {
-    window.localStorage.setItem(version, script.value);
-    try {
-      ast.value = parse(script.value);
-      syntaxErrorMessage.value = null;
-    } catch (e) {
-      const err = e as Error;
-      syntaxErrorMessage.value = err.message;
-      console.error("info" in err ? err.info : err);
-      return;
-    }
-  },
-  { immediate: true },
-);
+const ast = computed<string>(() => {
+  try {
+    const _ast = v.value.parse(script.value);
+    syntaxErrorMessage.value = null;
+    return _ast;
+  } catch (e) {
+    const err = e as Error;
+    syntaxErrorMessage.value = err.message;
+    console.error("info" in err ? err.info : err);
+    return `${err}`;
+  }
+});
 
 function run() {
   logs.value = [];
-  exec({
+  v.value.exec({
     in: (q: string) =>
       new Promise((ok) => {
         const res = window.prompt(q);
