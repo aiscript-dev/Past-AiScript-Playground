@@ -12,7 +12,7 @@
     </template>
     <PrismEditor
       :class="$style.code"
-      v-model="modelValueInter"
+      v-model="code"
       :highlight="highlighter"
       :line-numbers="false"
     />
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { PrismEditor } from "vue-prism-editor";
 import "vue-prism-editor/dist/prismeditor.min.css";
 import "prismjs";
@@ -55,28 +55,16 @@ declare function highlight(
 ): string;
 
 const props = defineProps<{
-  modelValue: string;
   samples?: Record<string, string>;
   parseError?: string | null;
 }>();
 const emit = defineEmits<{
   (e: "run"): void;
-  (e: "update:modelValue", value: string): void;
 }>();
-
-const modelValueInter = ref<string>(props.modelValue);
-watch(
-  modelValueInter,
-  () => {
-    emit("update:modelValue", modelValueInter.value);
-  },
-  {
-    immediate: true,
-  },
-);
+const code = defineModel<string>();
 
 function onSelectSample(chosen: string) {
-  modelValueInter.value = props.samples![chosen] as string;
+  code.value = props.samples![chosen] as string;
 }
 
 const highlighter = (code: string) => {
