@@ -19,18 +19,18 @@
     "aiscript0_18_0": "npm:@syuilo/aiscript@0.18.0",
     "aiscript0_19_0": "npm:@syuilo/aiscript@0.19.0",
     "prismjs": "^1.29.0",
-    "vue": "^3.4.31",
+    "vue": "^3.5.13",
     "vue-prism-editor": "^2.0.0-alpha.2",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@babel/types": "^7.24.7",
-    "@types/node": "^20.14.9",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@types/node": "^22.9.0",
+    "@vitejs/plugin-vue": "^5.2.0",
     "@vue/compiler-sfc": "^3.0.5",
     "prettier": "^3.3.2",
     "typescript": "^5.5.2",
-    "vite": "^5.3.2",
+    "vite": "^5.4.11",
     "vue-tsc": "^2.0.22"
   }
 }
