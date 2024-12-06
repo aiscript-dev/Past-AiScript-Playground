@@ -9,7 +9,7 @@
     "prettier": "npx prettier . --write"
   },
   "dependencies": {
-    "@vueuse/core": "^11.2.0",
+    "@vueuse/core": "^12.0.0",
     "aiscript_develop": "npm:@syuilo/aiscript@dev",
     "aiscript_next": "npm:@syuilo/aiscript@next",
     "aiscript0_14_1": "npm:@syuilo/aiscript@0.14.1",
@@ -21,16 +21,16 @@
     "prismjs": "^1.29.0",
     "vue": "^3.4.31",
     "vue-prism-editor": "^2.0.0-alpha.2",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/types": "^7.24.7",
-    "@types/node": "^20.14.9",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@babel/types": "^7.26.3",
+    "@types/node": "^22.10.1",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "^3.0.5",
-    "prettier": "^3.3.2",
-    "typescript": "^5.5.2",
-    "vite": "^5.3.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
     "vue-tsc": "^2.0.22"
   }
 }
